@@ -56,20 +56,18 @@ jobs:
 
       - name: Run Tests 
         run: |
-        mkdir -p test-results
-        chmod 777 .
-        chmod 777 test-results
-        cat <<EOF > coverage.sh |
-        #!/bin/bash
-        pip install coverage \
-        && /home/autoct/.local/bin/coverage run -m pytest --junitxml=test-results/junit.xml tests \
-        && /home/autoct/.local/bin/coverage report \
-        && /home/autoct/.local/bin/coverage html -d test-results
-        EOF
-        ls -l coverage.sh
-
-        chmod 777 coverage.sh
-        docker run --rm --name autoct-testing -v ${{ github.workspace }}:/autocttesting -w /autocttesting -t autoct:latest ./coverage.sh
+           mkdir -p test-results
+           chmod 777 .
+           chmod 777 test-results
+           cat <<EOF > coverage.sh |
+           #!/bin/bash
+           pip install coverage \
+           && /home/autoct/.local/bin/coverage run -m pytest --junitxml=test-results/junit.xml tests \
+           && /home/autoct/.local/bin/coverage report \
+           && /home/autoct/.local/bin/coverage html -d test-results
+           EOF
+           chmod 777 coverage.sh
+           docker run --rm --name autoct-testing -v ${{ github.workspace }}:/autocttesting -w /autocttesting -t autoct:latest ./coverage.sh
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
