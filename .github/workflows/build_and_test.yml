@@ -24,7 +24,6 @@ jobs:
           TAG=latest
           IMAGE="autoct"
           echo ::set-output name=tagged_image::${IMAGE}:${TAG}
-          echo ::set-output name=tag::${TAG}
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@master
